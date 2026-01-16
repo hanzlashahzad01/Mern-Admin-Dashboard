@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <aside
             className={cn(
                 "fixed left-0 top-0 h-screen transition-all duration-300 z-50 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col",
-                isOpen ? "w-64" : "w-20"
+                isOpen ? "w-64 translate-x-0" : "w-20 -translate-x-full lg:translate-x-0"
             )}
         >
             <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">

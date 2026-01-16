@@ -10,9 +10,11 @@ import {
     CheckCircle,
     XCircle
 } from 'lucide-react';
-import api from '../services/api';
+import api, { BASE_URL } from '../services/api';
+import { useNotifications } from '../context/NotificationContext';
 
 const Users = () => {
+    const { addNotification } = useNotifications();
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -40,8 +42,10 @@ const Users = () => {
         try {
             if (currentUser) {
                 await api.put(`/users/${currentUser._id}`, formData);
+                addNotification('User Updated', `User ${formData.name} has been updated successfully.`);
             } else {
                 await api.post('/users', formData);
+                addNotification('User Created', `New user ${formData.name} has been added to the system.`);
             }
             setIsModalOpen(false);
             fetchUsers();
@@ -123,8 +127,12 @@ const Users = () => {
                                 <tr key={user._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
                                     <td className="px-6 py-4">
                                         <div className="flex items-center space-x-3">
-                                            <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold">
-                                                {user.name.charAt(0)}
+                                            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white font-bold overflow-hidden">
+                                                {user.profileImage ? (
+                                                    <img src={`${BASE_URL}${user.profileImage}`} alt="" className="w-full h-full object-cover" />
+                                                ) : (
+                                                    user.name.charAt(0)
+                                                )}
                                             </div>
                                             <div>
                                                 <div className="text-sm font-semibold">{user.name}</div>

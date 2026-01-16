@@ -1,11 +1,12 @@
-import { Bell, Search, Sun, Moon, User } from 'lucide-react';
+import { Bell, Search, Sun, Moon, User, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useNotifications } from '../context/NotificationContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../services/api';
 
-const Navbar = () => {
+const Navbar = ({ toggleSidebar }) => {
     const { user } = useAuth();
     const { isDarkMode, toggleDarkMode } = useTheme();
     const { unreadCount } = useNotifications();
@@ -14,9 +15,17 @@ const Navbar = () => {
 
     return (
         <header className="fixed top-0 right-0 left-0 z-40 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 h-16 transition-all duration-300">
-            <div className="flex items-center justify-between h-full px-6 ml-auto">
-                <div className="relative flex-1 max-w-md ml-64 lg:ml-72 hidden md:block">
-                    {/* Placeholder for future sidebar-aware margin */}
+            <div className="flex items-center justify-between h-full px-4 sm:px-6">
+                <div className="flex items-center gap-4">
+                    <button
+                        onClick={toggleSidebar}
+                        className="lg:hidden p-2 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl transition"
+                    >
+                        <Menu size={20} />
+                    </button>
+                    <div className="relative flex-1 max-w-md hidden md:block">
+                        {/* Search remains hidden on mobile to save space, or can be toggled */}
+                    </div>
                 </div>
 
                 <div className="flex items-center space-x-4 ml-auto">
@@ -61,8 +70,12 @@ const Navbar = () => {
                                 <span className="text-sm font-semibold text-gray-900 dark:text-white">{user?.name}</span>
                                 <span className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user?.role}</span>
                             </div>
-                            <div className="w-9 h-9 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">
-                                {user?.name?.charAt(0)}
+                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30 overflow-hidden">
+                                {user?.profileImage ? (
+                                    <img src={`${BASE_URL}${user.profileImage}`} alt="Avatar" className="w-full h-full object-cover" />
+                                ) : (
+                                    user?.name?.charAt(0)
+                                )}
                             </div>
                         </button>
 

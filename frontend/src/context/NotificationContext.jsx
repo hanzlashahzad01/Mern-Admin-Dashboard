@@ -9,6 +9,17 @@ export const NotificationProvider = ({ children }) => {
         { id: 3, title: 'Update Successful', message: 'System updated to version 2.4.0.', time: '1 hour ago', read: true },
     ]);
 
+    const addNotification = (title, message) => {
+        const newNotif = {
+            id: Date.now(),
+            title,
+            message,
+            time: 'Just now',
+            read: false,
+        };
+        setNotifications(prev => [newNotif, ...prev]);
+    };
+
     const markAsRead = (id) => {
         setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
     };
@@ -20,7 +31,7 @@ export const NotificationProvider = ({ children }) => {
     const unreadCount = notifications.filter(n => !n.read).length;
 
     return (
-        <NotificationContext.Provider value={{ notifications, markAsRead, markAllAsRead, unreadCount }}>
+        <NotificationContext.Provider value={{ notifications, markAsRead, markAllAsRead, unreadCount, addNotification }}>
             {children}
         </NotificationContext.Provider>
     );

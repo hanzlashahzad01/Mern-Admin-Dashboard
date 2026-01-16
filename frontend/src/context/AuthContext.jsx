@@ -40,8 +40,19 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    const updateProfile = async (formData) => {
+        // formData can be a FormData object for file uploads
+        const { data } = await api.put('/auth/profile', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        setUser(data);
+        return data;
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, logout, updateProfile, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     );

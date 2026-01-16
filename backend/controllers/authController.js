@@ -81,8 +81,43 @@ const getMe = async (req, res) => {
     res.status(200).json(req.user);
 };
 
+// @desc    Update user profile
+// @route   PUT /api/auth/profile
+// @access  Private
+const updateProfile = async (req, res) => {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+
+        if (req.body.password) {
+            user.password = req.body.password;
+        }
+
+        if (req.file) {
+            user.profileImage = `/uploads/${req.file.filename}`;
+        }
+
+        const updatedUser = await user.save();
+        await createLog(user._id, user.name, 'Update Settings', 'User updated profile settings');
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            role: updatedUser.role,
+            profileImage: updatedUser.profileImage,
+            token: generateToken(updatedUser._id),
+        });
+    } else {
+        res.status(404).json({ message: 'User not found' });
+    }
+};
+
 module.exports = {
     registerUser,
     loginUser,
     getMe,
+    updateProfile,
 };
