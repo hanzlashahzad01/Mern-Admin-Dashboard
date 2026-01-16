@@ -64,6 +64,14 @@ const Login = () => {
                         <p className="mt-1 text-xs text-red-500">{errors.password?.message}</p>
                     </div>
 
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                            <input id="remember-me" type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                            <label htmlFor="remember-me" className="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</label>
+                        </div>
+                        <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">Forgot password?</a>
+                    </div>
+
                     <button
                         type="submit"
                         className="w-full px-4 py-3 font-semibold text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"

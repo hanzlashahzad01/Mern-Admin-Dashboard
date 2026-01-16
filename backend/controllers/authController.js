@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const { createLog } = require('../utils/logger');
 
 // Generate JWT
 const generateToken = (id) => {
@@ -37,6 +38,7 @@ const registerUser = async (req, res) => {
     });
 
     if (user) {
+        await createLog(user._id, user.name, 'Create User', `Initial registration for ${email}`);
         res.status(201).json({
             _id: user.id,
             name: user.name,
@@ -59,6 +61,7 @@ const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
+        await createLog(user._id, user.name, 'Login', 'User logged in');
         res.json({
             _id: user.id,
             name: user.name,
