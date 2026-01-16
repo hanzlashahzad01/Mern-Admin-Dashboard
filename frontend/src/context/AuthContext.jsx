@@ -41,12 +41,8 @@ export const AuthProvider = ({ children }) => {
     };
 
     const updateProfile = async (formData) => {
-        // formData can be a FormData object for file uploads
-        const { data } = await api.put('/auth/profile', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+        // Let Axios set the boundary automatically for FormData
+        const { data } = await api.put('/auth/profile', formData);
         setUser(data);
         return data;
     };

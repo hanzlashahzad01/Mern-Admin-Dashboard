@@ -56,6 +56,17 @@ const Users = () => {
         }
     };
 
+    const toggleStatus = async (user) => {
+        try {
+            const newStatus = user.status === 'active' ? 'inactive' : 'active';
+            await api.put(`/users/${user._id}`, { status: newStatus });
+            addNotification('Status Updated', `${user.name} is now ${newStatus}.`);
+            fetchUsers();
+        } catch (error) {
+            alert('Failed to update status');
+        }
+    };
+
     const handleDelete = async (id) => {
         if (window.confirm('Are you sure you want to delete this user?')) {
             try {
@@ -146,14 +157,18 @@ const Users = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <div className="flex items-center space-x-1 text-sm">
+                                        <button
+                                            onClick={() => toggleStatus(user)}
+                                            className="flex items-center space-x-1 text-sm hover:opacity-80 transition"
+                                            title="Click to toggle status"
+                                        >
                                             {user.status === 'active' ? (
                                                 <CheckCircle size={16} className="text-green-500" />
                                             ) : (
                                                 <XCircle size={16} className="text-red-500" />
                                             )}
                                             <span className="capitalize">{user.status}</span>
-                                        </div>
+                                        </button>
                                     </td>
                                     <td className="px-6 py-4 text-sm text-gray-500">
                                         {new Date(user.createdAt).toLocaleDateString()}

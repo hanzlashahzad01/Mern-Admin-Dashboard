@@ -85,33 +85,46 @@ const getMe = async (req, res) => {
 // @route   PUT /api/auth/profile
 // @access  Private
 const updateProfile = async (req, res) => {
-    const user = await User.findById(req.user._id);
+    try {
+        const user = await User.findById(req.user._id);
 
-    if (user) {
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
+        if (user) {
+            // Check if email already taken by another user
+            if (req.body.email && req.body.email !== user.email) {
+                const emailExists = await User.findOne({ email: req.body.email });
+                if (emailExists) {
+                    return res.status(400).json({ message: 'Email already in use by another account' });
+                }
+                user.email = req.body.email;
+            }
 
-        if (req.body.password) {
-            user.password = req.body.password;
+            user.name = req.body.name || user.name;
+
+            if (req.body.password) {
+                user.password = req.body.password;
+            }
+
+            if (req.file) {
+                user.profileImage = `/uploads/${req.file.filename}`;
+            }
+
+            const updatedUser = await user.save();
+            await createLog(user._id, user.name, 'Update Settings', 'User updated profile settings');
+
+            res.json({
+                _id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                role: updatedUser.role,
+                profileImage: updatedUser.profileImage,
+                token: generateToken(updatedUser._id),
+            });
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
-
-        if (req.file) {
-            user.profileImage = `/uploads/${req.file.filename}`;
-        }
-
-        const updatedUser = await user.save();
-        await createLog(user._id, user.name, 'Update Settings', 'User updated profile settings');
-
-        res.json({
-            _id: updatedUser._id,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            role: updatedUser.role,
-            profileImage: updatedUser.profileImage,
-            token: generateToken(updatedUser._id),
-        });
-    } else {
-        res.status(404).json({ message: 'User not found' });
+    } catch (error) {
+        console.error('Update Profile Error:', error);
+        res.status(500).json({ message: error.message || 'Server error during profile update' });
     }
 };
 

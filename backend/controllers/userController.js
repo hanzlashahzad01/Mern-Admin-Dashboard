@@ -37,6 +37,14 @@ const updateUser = async (req, res) => {
         const user = await User.findById(req.params.id);
 
         if (user) {
+            // Check email uniqueness if changed
+            if (req.body.email && req.body.email !== user.email) {
+                const emailExists = await User.findOne({ email: req.body.email });
+                if (emailExists) {
+                    return res.status(400).json({ message: 'Email already exists' });
+                }
+            }
+
             user.name = req.body.name || user.name;
             user.email = req.body.email || user.email;
             user.role = req.body.role || user.role;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Users,
     UserCheck,
@@ -146,7 +147,7 @@ const Dashboard = () => {
             <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
                 <div className="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">Recent Activity</h3>
-                    <button className="text-blue-600 text-sm font-medium hover:underline">View all logs</button>
+                    <Link to="/logs" className="text-blue-600 text-sm font-medium hover:underline">View all logs</Link>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
@@ -164,8 +165,8 @@ const Dashboard = () => {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{log.userName}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         <span className={`px-3 py-1 text-xs font-bold rounded-full ${log.action.includes('Delete') ? 'bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-400' :
-                                                log.action.includes('Create') ? 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400' :
-                                                    'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
+                                            log.action.includes('Create') ? 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400' :
+                                                'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
                                             }`}>
                                             {log.action}
                                         </span>

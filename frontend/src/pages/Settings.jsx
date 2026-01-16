@@ -22,6 +22,20 @@ const Settings = () => {
         name: user?.name || '',
         email: user?.email || '',
     });
+
+    // Sync profile data if user state updates
+    useEffect(() => {
+        if (user) {
+            setProfileData({
+                name: user.name,
+                email: user.email
+            });
+            if (user.profileImage) {
+                setImagePreview(`${BASE_URL}${user.profileImage}`);
+            }
+        }
+    }, [user]);
+
     const [imagePreview, setImagePreview] = useState(user?.profileImage ? `${BASE_URL}${user.profileImage}` : null);
     const [selectedImage, setSelectedImage] = useState(null);
     const fileInputRef = useRef(null);
@@ -64,7 +78,8 @@ const Settings = () => {
             setSuccess('Profile updated successfully!');
             setTimeout(() => setSuccess(''), 3000);
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to update profile');
+            console.error('Update Profile Error Details:', err);
+            setError(err.response?.data?.message || 'Failed to update profile. Please try again.');
         } finally {
             setLoading(false);
         }

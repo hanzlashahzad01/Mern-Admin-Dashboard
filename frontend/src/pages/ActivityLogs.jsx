@@ -35,6 +35,23 @@ const ActivityLogs = () => {
         log.details.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const exportToCSV = () => {
+        const headers = ['User,Action,Details,Time,IP Address\n'];
+        const rows = filteredLogs.map(log =>
+            `"${log.userName}","${log.action}","${log.details}","${new Date(log.createdAt).toLocaleString()}","${log.ipAddress || '127.0.0.1'}"`
+        ).join('\n');
+
+        const blob = new Blob([headers + rows], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.setAttribute('hidden', '');
+        a.setAttribute('href', url);
+        a.setAttribute('download', 'activity_logs.csv');
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
+
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -42,7 +59,10 @@ const ActivityLogs = () => {
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Activity Logs</h1>
                     <p className="text-gray-500 dark:text-gray-400">Track all system actions and user movements.</p>
                 </div>
-                <button className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 transition shadow-sm">
+                <button
+                    onClick={exportToCSV}
+                    className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 transition shadow-sm"
+                >
                     <Download size={18} />
                     <span>Export Logs</span>
                 </button>
@@ -95,9 +115,9 @@ const ActivityLogs = () => {
                                     </td>
                                     <td className="px-6 py-4">
                                         <span className={`px-3 py-1 text-[10px] font-bold uppercase rounded-full ${log.action.includes('Delete') ? 'bg-red-100 text-red-600 dark:bg-red-900/40 dark:text-red-400' :
-                                                log.action.includes('Create') ? 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400' :
-                                                    log.action.includes('Login') ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400' :
-                                                        'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
+                                            log.action.includes('Create') ? 'bg-green-100 text-green-600 dark:bg-green-900/40 dark:text-green-400' :
+                                                log.action.includes('Login') ? 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/40 dark:text-indigo-400' :
+                                                    'bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-400'
                                             }`}>
                                             {log.action}
                                         </span>
