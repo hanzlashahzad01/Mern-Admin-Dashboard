@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const schema = yup.object({
@@ -16,7 +16,9 @@ const Login = () => {
     });
     const { login } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
     const [error, setError] = useState('');
+    const successMessage = location.state?.message;
 
     const onSubmit = async (data) => {
         try {
@@ -34,6 +36,12 @@ const Login = () => {
                     <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h1>
                     <p className="mt-2 text-gray-500 dark:text-gray-400">Sign in to your account</p>
                 </div>
+
+                {successMessage && (
+                    <div className="p-3 text-sm text-green-600 bg-green-100 border border-green-200 rounded-lg dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">
+                        {successMessage}
+                    </div>
+                )}
 
                 {error && (
                     <div className="p-3 text-sm text-red-600 bg-red-100 border border-red-200 rounded-lg dark:bg-red-900/30 dark:text-red-400 dark:border-red-800">
@@ -69,7 +77,7 @@ const Login = () => {
                             <input id="remember-me" type="checkbox" className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
                             <label htmlFor="remember-me" className="ml-2 text-sm text-gray-600 dark:text-gray-400">Remember me</label>
                         </div>
-                        <a href="#" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">Forgot password?</a>
+                        <Link to="/forgot-password" title="Forgot password link" name="Forgot password link" className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">Forgot password?</Link>
                     </div>
 
                     <button

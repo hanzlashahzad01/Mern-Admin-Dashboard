@@ -30,6 +30,9 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/analytics', require('./routes/analyticsRoutes'));
 app.use('/api/logs', require('./routes/logRoutes'));
 
+const { errorHandler } = require('./middleware/errorMiddleware');
+app.use(errorHandler);
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

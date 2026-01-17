@@ -47,8 +47,20 @@ export const AuthProvider = ({ children }) => {
         return data;
     };
 
+    const forgotPassword = async (email) => {
+        await api.post('/auth/forgotpassword', { email });
+    };
+
+    const resetPassword = async (token, password) => {
+        const { data } = await api.put(`/auth/resetpassword/${token}`, { password });
+        localStorage.setItem('token', data.token);
+        // After reset, we might want to fetch user data or just let them login
+        // For now, let's just return the data
+        return data;
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, updateProfile, loading }}>
+        <AuthContext.Provider value={{ user, login, logout, updateProfile, forgotPassword, resetPassword, loading }}>
             {!loading && children}
         </AuthContext.Provider>
     );

@@ -37,6 +37,11 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         !item.roles || item.roles.includes(user?.role)
     );
 
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
     return (
         <aside
             className={cn(
@@ -86,7 +91,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
             <div className="p-4 border-t border-gray-200 dark:border-gray-700">
                 <button
-                    onClick={logout}
+                    onClick={handleLogout}
                     className={cn(
                         "flex items-center w-full p-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200 font-medium text-sm",
                         !isOpen && "justify-center"

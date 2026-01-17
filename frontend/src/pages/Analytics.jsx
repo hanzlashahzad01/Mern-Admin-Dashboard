@@ -12,6 +12,8 @@ import {
     Area
 } from 'recharts';
 import { Download, Calendar, Filter } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const data = [
     { name: 'Monday', users: 4000, active: 2400, amt: 2400 },
@@ -24,15 +26,42 @@ const data = [
 ];
 
 const Analytics = () => {
+    const handleDownloadPDF = async () => {
+        const input = document.getElementById('analytics-content');
+        if (!input) return;
+
+        try {
+            const canvas = await html2canvas(input, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            });
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgProps = pdf.getImageProperties(imgData);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            pdf.save('analytics-report.pdf');
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+            alert('Failed to generate PDF. Please try again.');
+        }
+    };
+
     return (
-        <div className="space-y-8">
+        <div className="space-y-8" id="analytics-content">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Advanced Analytics</h1>
                     <p className="text-gray-500 dark:text-gray-400">Detailed insights into system performance and user behavior.</p>
                 </div>
                 <div className="flex gap-2">
-                    <button className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 transition shadow-sm">
+                    <button
+                        onClick={handleDownloadPDF}
+                        className="flex items-center space-x-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 transition shadow-sm"
+                    >
                         <Download size={18} />
                         <span className="hidden sm:inline">Download PDF</span>
                     </button>

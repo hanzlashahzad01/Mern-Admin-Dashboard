@@ -7,11 +7,21 @@ import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../services/api';
 
 const Navbar = ({ toggleSidebar }) => {
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const { isDarkMode, toggleDarkMode } = useTheme();
     const { unreadCount } = useNotifications();
     const [showProfile, setShowProfile] = useState(false);
     const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/login');
+    };
+
+    const handleProfileSettings = () => {
+        navigate('/settings');
+        setShowProfile(false);
+    };
 
     return (
         <header className="fixed top-0 right-0 left-0 z-40 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 h-16 transition-all duration-300">
@@ -80,18 +90,24 @@ const Navbar = ({ toggleSidebar }) => {
                         </button>
 
                         {showProfile && (
-                            <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 py-2 z-50">
-                                <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20">
-                                    <User size={16} className="mr-2" /> Profile Settings
-                                </button>
-                                <div className="border-t border-gray-100 dark:border-gray-700 my-1"></div>
-                                <button
-                                    onClick={() => {/* logout handled in sidebar but can be here too */ }}
-                                    className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
-                                >
-                                    Logout
-                                </button>
-                            </div>
+                            <>
+                                <div className="fixed inset-0 z-40" onClick={() => setShowProfile(false)}></div>
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 py-2 z-50">
+                                    <button
+                                        onClick={handleProfileSettings}
+                                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors text-left"
+                                    >
+                                        <User size={16} className="mr-2" /> Profile Settings
+                                    </button>
+                                    <div className="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-left"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            </>
                         )}
                     </div>
                 </div>
