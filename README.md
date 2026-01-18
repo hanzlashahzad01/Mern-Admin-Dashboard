@@ -261,6 +261,8 @@ npm run check-users
 ### Database Connection
 Make sure MongoDB is running on your system or update the `MONGO_URI` in `.env` to point to your MongoDB Atlas cluster.
 
+## ScreenShots
+
 ## Sign in Page
 
 <img width="1919" height="1031" alt="Screenshot 2026-01-17 112300" src="https://github.com/user-attachments/assets/072785f9-471c-44ca-a15e-9da045b7693c" />
