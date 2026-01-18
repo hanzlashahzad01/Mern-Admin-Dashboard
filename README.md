@@ -1,119 +1,240 @@
-# Smart Admin Dashboard (MERN Stack)
+# MERN Admin Dashboard
 
-A production-grade Admin Dashboard built with the MERN stack (MongoDB, Express, React, Node.js). features properly implemented Role-Based Access Control (RBAC), Authentication, and Analytics.
+A professional, full-featured admin dashboard built with the MERN stack (MongoDB, Express, React, Node.js).
 
 ## 🚀 Features
 
+- **Role-Based Access Control (RBAC)**
+  - Admin: Full access to all features
+  - Manager: Access to analytics and dashboard
+  - User: Access to personal dashboard, settings, and notifications
+
+- **User Management**
+  - Create, edit, and delete users (Admin only)
+  - View and manage user profiles
+  - Toggle user status (active/inactive)
+
 - **Authentication & Authorization**
-  - JWT-based Login/Registration
-  - Secure Password Hashing (bcrypt)
-  - Role-Based Access Control (Super Admin, Admin, Manager, User)
-  - Protected Routes & API Endpoints
+  - Secure JWT-based authentication
+  - Public signup for users
+  - Fixed credentials for Admin and Manager
+  - Password reset functionality
 
-- **Dashboard & Analytics** (Coming Soon)
+- **Analytics Dashboard**
   - Real-time statistics
-  - Interactive Charts (Recharts)
-  - Data visualization
+  - User growth charts
+  - Role distribution visualization
+  - Activity logs
 
-- **User Management** (Coming Soon)
-  - Request/Approve Users
-  - CRUD operations
+- **Settings & Profile**
+  - Update profile information
+  - Change password
+  - Upload profile picture
 
-## 🛠️ Technology Stack
+## � Default Login Credentials
 
-**Frontend:**
-- React.js (Vite)
-- Tailwind CSS
-- React Router v6
-- Axios
-- React Hook Form + Yup
+### Admin Account
+- **Email:** `admin@gmail.com`
+- **Password:** `adminpassword123`
 
-**Backend:**
-- Node.js & Express.js
-- MongoDB & Mongoose
-- JWT & Bcryptjs
-- CORS & Dotenv
+### Manager Account
+- **Email:** `manager@gmail.com`
+- **Password:** `managerpassword123`
+
+### User Account
+- Users can sign up through the signup page
+- After signup, users will have limited access
 
 ## 📦 Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd "MERN Admin Dashboard"
-   ```
+### Prerequisites
+- Node.js (v14 or higher)
+- MongoDB (local or Atlas)
 
-2. **Setup Backend**
-   ```bash
-   cd backend
-   npm install
-   # Create .env file with PORT, MONGO_URI, JWT_SECRET
-   npm run dev
-   ```
+### Backend Setup
 
-3. **Setup Frontend**
-   ```bash
-   cd frontend
-   npm install
-   npm run dev
-   ```
+1. Navigate to the backend directory:
+```bash
+cd backend
+```
 
-4. **Access the App**
-   - Frontend: `http://localhost:5173`
-   - Backend API: `http://localhost:5000`
+2. Install dependencies:
+```bash
+npm install
+```
 
-## 📸 Screenshots
+3. Create a `.env` file in the backend directory:
+```env
+PORT=5000
+NODE_ENV=development
+MONGO_URI=mongodb://localhost:27017/smart-admin-dashboard
+JWT_SECRET=supersecretkey_dev_only_change_in_production
+```
 
-## Signin Page
+4. Start the backend server:
+```bash
+npm start
+```
 
-<img width="1919" height="1031" alt="sign in page" src="https://github.com/user-attachments/assets/abdb5443-9deb-460b-96fb-7c87b15cb18e" />
+The backend will run on `http://localhost:5000`
 
-## Home Page
+### Frontend Setup
 
-<img width="1919" height="1034" alt="super admin home " src="https://github.com/user-attachments/assets/c159f730-9908-4d40-a9fb-8feaa54cb78b" />
+1. Navigate to the frontend directory:
+```bash
+cd frontend
+```
 
-<img width="1919" height="1033" alt="a1" src="https://github.com/user-attachments/assets/1fd94b0f-842d-46f9-974e-dfd5b004f09e" />
+2. Install dependencies:
+```bash
+npm install
+```
 
-## User Management
+3. Start the frontend development server:
+```bash
+npm run dev
+```
 
-<img width="1919" height="1029" alt="user managemnet " src="https://github.com/user-attachments/assets/a2f237d4-713a-4e0d-a4fd-ec907ec5dba7" />
+The frontend will run on `http://localhost:5173` (or another port if 5173 is busy)
 
-## Add User
+## �️ Tech Stack
 
-<img width="1919" height="1032" alt="add user" src="https://github.com/user-attachments/assets/a419d182-2ae5-4cbd-ac65-7252944f44b5" />
+### Frontend
+- React.js
+- React Router
+- TailwindCSS
+- Recharts (for analytics)
+- Lucide React (icons)
+- React Hook Form + Yup (form validation)
 
-## Update User
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT for authentication
+- Bcrypt for password hashing
+- Multer for file uploads
 
-<img width="1919" height="1034" alt="update user" src="https://github.com/user-attachments/assets/77a55c8a-4530-4d84-8d73-2056d232c09f" />
+## 📁 Project Structure
 
-## Delete User
+```
+MERN-Admin-Dashboard/
+├── backend/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── scripts/
+│   ├── uploads/
+│   ├── utils/
+│   └── server.js
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── context/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   └── App.jsx
+│   └── index.html
+└── README.md
+```
 
-<img width="1919" height="1029" alt="delete user" src="https://github.com/user-attachments/assets/8741768b-25a3-4f72-9eb4-a6687839f7ac" />
+## 🔧 Available Scripts
 
-## Analytics Page
+### Backend
+- `npm start` - Start the server
+- `node scripts/fixRoles.js` - Fix admin and manager roles in database
 
-<img width="1919" height="1031" alt="analytics " src="https://github.com/user-attachments/assets/0d494a9c-2314-4722-ac6f-4ab1fc010f45" />
+### Frontend
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
 
-<img width="1919" height="1028" alt="ana 1" src="https://github.com/user-attachments/assets/6bc96016-1a79-49a6-ba85-57b17db53c21" />
+## 🎯 Role Permissions
 
-## Activity Logs Page
+| Feature | User | Manager | Admin |
+|---------|------|---------|-------|
+| Dashboard | ✅ | ✅ | ✅ |
+| Settings | ✅ | ✅ | ✅ |
+| Notifications | ✅ | ✅ | ✅ |
+| Analytics | ❌ | ✅ | ✅ |
+| User Management | ❌ | ❌ | ✅ |
+| Activity Logs | ❌ | ❌ | ✅ |
 
-<img width="1919" height="1028" alt="activity logs" src="https://github.com/user-attachments/assets/ed7a89f5-8ed3-445d-a650-f72e715f40f0" />
+## 🔒 Security Features
 
-<img width="1919" height="1030" alt="activity logs 1" src="https://github.com/user-attachments/assets/9d71ea8d-e9bf-455f-a7ca-e4fd66c80529" />
+- Password hashing with bcrypt
+- JWT token-based authentication
+- Protected routes on both frontend and backend
+- Role-based authorization middleware
+- Input validation with Yup
+- Secure file upload handling
 
+## 📝 API Endpoints
 
-## Notifications Page
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+- `GET /api/auth/me` - Get current user
+- `PUT /api/auth/profile` - Update profile
+- `POST /api/auth/forgotpassword` - Request password reset
+- `PUT /api/auth/resetpassword/:token` - Reset password
 
-<img width="1919" height="1033" alt="notification" src="https://github.com/user-attachments/assets/63676656-6dab-4122-ad9c-2fe303b7fd8f" />
+### Users (Admin only)
+- `GET /api/users` - Get all users
+- `POST /api/users` - Create user
+- `PUT /api/users/:id` - Update user
+- `DELETE /api/users/:id` - Delete user
 
-## Settings
+### Analytics
+- `GET /api/analytics/summary` - Get analytics summary
 
-<img width="1919" height="1032" alt="settings" src="https://github.com/user-attachments/assets/e1632a24-e83a-407c-bd4d-9522d2a5ad74" />
+### Logs
+- `GET /api/logs` - Get activity logs
+- `GET /api/logs/export` - Export logs as CSV
 
-## 🤝 Contributing
+## 🌟 Key Features Explained
 
-1. Fork the Project
-2. Create your Feature Branch
-3. Commit your Changes
-4. Push to the Branch
-5. Open a Pull Request
+### Signup & Login
+- New users can sign up with their email and password
+- All new signups are automatically assigned the "user" role
+- Admin and Manager have fixed credentials (cannot signup)
+
+### Role-Based Dashboard
+- **Users** see a personalized welcome dashboard
+- **Managers** see analytics and system statistics
+- **Admins** see full analytics, user management, and logs
+
+### User Management (Admin Only)
+- Create, edit, and delete users
+- Change user roles
+- Toggle user status (active/inactive)
+- View user profiles and activity
+
+## 🐛 Troubleshooting
+
+### Manager Login Issue
+If the manager login shows admin access, run the fix script:
+```bash
+cd backend
+node scripts/fixRoles.js
+```
+
+### Database Connection
+Make sure MongoDB is running on your system or update the `MONGO_URI` in `.env` to point to your MongoDB Atlas cluster.
+
+## 📄 License
+
+This project is open source and available under the MIT License.
+
+## 👨‍💻 Author
+
+Hanzla Shahzad
+- GitHub: [@hanzlashahzad01](https://github.com/hanzlashahzad01)
+
+---
+
+**Note:** Remember to change the default admin and manager passwords in production!
