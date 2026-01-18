@@ -3,6 +3,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Dashboard from './pages/Dashboard';
@@ -22,6 +23,7 @@ function App() {
           <NotificationProvider>
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
 
@@ -29,12 +31,19 @@ function App() {
                 <Route element={<Layout />}>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/dashboard" element={<Navigate to="/" replace />} />
-                  <Route path="/users" element={<Users />} />
-                  <Route path="/analytics" element={<Analytics />} />
-                  <Route path="/logs" element={<ActivityLogs />} />
                   <Route path="/notifications" element={<Notifications />} />
                   <Route path="/settings" element={<Settings />} />
-                  {/* Add more routes here */}
+
+                  {/* Admin & Manager Routes */}
+                  <Route element={<ProtectedRoute allowedRoles={['admin', 'superadmin', 'manager']} />}>
+                    <Route path="/analytics" element={<Analytics />} />
+                  </Route>
+
+                  {/* Admin Only Routes */}
+                  <Route element={<ProtectedRoute allowedRoles={['admin', 'superadmin']} />}>
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/logs" element={<ActivityLogs />} />
+                  </Route>
                 </Route>
               </Route>
             </Routes>

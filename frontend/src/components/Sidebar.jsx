@@ -27,7 +27,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
     const menuItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
         { name: 'User Management', icon: Users, path: '/users', roles: ['superadmin', 'admin'] },
-        { name: 'Analytics', icon: BarChart3, path: '/analytics' },
+        { name: 'Analytics', icon: BarChart3, path: '/analytics', roles: ['superadmin', 'admin', 'manager'] },
         { name: 'Activity Logs', icon: Activity, path: '/logs', roles: ['superadmin', 'admin'] },
         { name: 'Notifications', icon: Bell, path: '/notifications' },
         { name: 'Settings', icon: Settings, path: '/settings' },

@@ -10,6 +10,10 @@ dotenv.config();
 // Connect to database
 connectDB();
 
+// Seed initial users
+const seedUsers = require('./utils/seed');
+seedUsers();
+
 const app = express();
 
 // Middleware

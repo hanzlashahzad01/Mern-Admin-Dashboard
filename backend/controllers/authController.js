@@ -30,12 +30,12 @@ const registerUser = async (req, res) => {
     }
 
     // Create user
-    // Note: Role is passed for testing, logic should be stricter in prod
+    // Note: Role is forced to 'user' for public registration
     const user = await User.create({
         name,
         email,
         password,
-        role: role || 'user',
+        role: 'user', // Force role to user
     });
 
     if (user) {

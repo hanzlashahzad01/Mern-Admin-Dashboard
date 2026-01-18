@@ -23,6 +23,7 @@ import {
     Bar
 } from 'recharts';
 import api from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
 
@@ -43,11 +44,18 @@ const StatCard = ({ title, value, icon: Icon, trend, trendValue }) => (
 );
 
 const Dashboard = () => {
+    const { user } = useAuth();
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const isAdminOrManager = ['admin', 'superadmin', 'manager'].includes(user?.role);
+
     useEffect(() => {
         const fetchSummary = async () => {
+            if (!isAdminOrManager) {
+                setLoading(false);
+                return;
+            }
             try {
                 const { data } = await api.get('/analytics/summary');
                 setData(data);
@@ -58,7 +66,7 @@ const Dashboard = () => {
             }
         };
         fetchSummary();
-    }, []);
+    }, [isAdminOrManager]);
 
     if (loading) return <div className="animate-pulse space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -69,6 +77,56 @@ const Dashboard = () => {
             <div className="h-80 bg-gray-200 dark:bg-gray-700 rounded-3xl"></div>
         </div>
     </div>;
+
+    if (!isAdminOrManager) {
+        return (
+            <div className="space-y-8">
+                <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] p-8 sm:p-12 text-white shadow-xl shadow-blue-500/20 relative overflow-hidden">
+                    <div className="relative z-10">
+                        <h1 className="text-3xl sm:text-4xl font-bold mb-4">Welcome back, {user?.name}! 👋</h1>
+                        <p className="text-blue-100 text-lg max-w-2xl">
+                            You are logged in as a <strong>{user?.role}</strong>. Your account is active and you have access to your personal settings and notifications.
+                        </p>
+                        <div className="mt-8 flex flex-wrap gap-4">
+                            <Link to="/settings" className="px-6 py-3 bg-white text-blue-600 rounded-2xl font-bold hover:bg-blue-50 transition shadow-lg">
+                                Manage Profile
+                            </Link>
+                            <Link to="/notifications" className="px-6 py-3 bg-blue-500/30 backdrop-blur-md text-white border border-blue-400/30 rounded-2xl font-bold hover:bg-blue-500/40 transition">
+                                View Notifications
+                            </Link>
+                        </div>
+                    </div>
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+                    <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-400/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl"></div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div className="w-12 h-12 bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 rounded-2xl flex items-center justify-center mb-4">
+                            <UserCheck size={24} />
+                        </div>
+                        <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">Account Status</h3>
+                        <p className="text-xl font-bold text-gray-900 dark:text-white mt-1 capitalize">{user?.status || 'Active'}</p>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 rounded-2xl flex items-center justify-center mb-4">
+                            <Activity size={24} />
+                        </div>
+                        <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">Last Login</h3>
+                        <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">Just now</p>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 p-6 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div className="w-12 h-12 bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 rounded-2xl flex items-center justify-center mb-4">
+                            <TrendingUp size={24} />
+                        </div>
+                        <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">Activity Level</h3>
+                        <p className="text-xl font-bold text-gray-900 dark:text-white mt-1">Normal</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
