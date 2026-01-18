@@ -261,6 +261,44 @@ npm run check-users
 ### Database Connection
 Make sure MongoDB is running on your system or update the `MONGO_URI` in `.env` to point to your MongoDB Atlas cluster.
 
+## Sign in Page
+
+<img width="1919" height="1031" alt="Screenshot 2026-01-17 112300" src="https://github.com/user-attachments/assets/072785f9-471c-44ca-a15e-9da045b7693c" />
+
+## DashBoard
+
+<img width="1919" height="1034" alt="Screenshot 2026-01-17 112424" src="https://github.com/user-attachments/assets/a0d42f79-739b-47de-a353-061985cf03af" />
+
+<img width="1919" height="1031" alt="Screenshot 2026-01-17 112739" src="https://github.com/user-attachments/assets/edef0632-a3ae-4c99-a23a-d0c00a91d94f" />
+
+<img width="1919" height="1028" alt="Screenshot 2026-01-17 112813" src="https://github.com/user-attachments/assets/3d6f6771-8c70-43a1-8309-c6d760c000e5" />
+
+## Activity Logs
+
+<img width="1919" height="1028" alt="Screenshot 2026-01-17 112900" src="https://github.com/user-attachments/assets/cc8950d4-5445-48a4-9042-6826354f2675" />
+
+<img width="1919" height="1030" alt="Screenshot 2026-01-17 112932" src="https://github.com/user-attachments/assets/ed59d302-848c-44f3-b68f-c89766290da6" />
+
+## Notification Page
+
+<img width="1919" height="1033" alt="Screenshot 2026-01-17 113022" src="https://github.com/user-attachments/assets/7eab97c9-8967-4dbd-bd41-c523373d6a29" />
+
+## User Management Page
+
+<img width="1919" height="1029" alt="Screenshot 2026-01-17 112533" src="https://github.com/user-attachments/assets/d9c5e278-eb2f-47e5-b682-1b629250a321" />
+
+<img width="1919" height="1032" alt="Screenshot 2026-01-17 112603" src="https://github.com/user-attachments/assets/693826eb-df7f-43c1-abe8-740a91d74b4b" />
+
+<img width="1919" height="1034" alt="Screenshot 2026-01-17 112628" src="https://github.com/user-attachments/assets/4e4f2402-e19c-48d6-9ed2-b59ad763fda4" />
+
+<img width="1919" height="1029" alt="Screenshot 2026-01-17 112659" src="https://github.com/user-attachments/assets/b5e8410d-467a-49fd-8a8c-42e47c5680f9" />
+
+<img width="1919" height="1032" alt="Screenshot 2026-01-16 184600" src="https://github.com/user-attachments/assets/6b92b7d6-4a87-4c0d-a039-0c27f1cd0177" />
+
+## Settings Page
+
+<img width="1919" height="1032" alt="Screenshot 2026-01-17 113110" src="https://github.com/user-attachments/assets/bbc5ae93-8516-4649-acc5-331725964e4c" />
+
 ## 📄 License
 
 This project is open source and available under the MIT License.
