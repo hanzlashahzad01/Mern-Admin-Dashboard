@@ -146,7 +146,11 @@ MERN-Admin-Dashboard/
 
 ### Backend
 - `npm start` - Start the server
-- `node scripts/fixRoles.js` - Fix admin and manager roles in database
+- `npm run dev` - Start server with nodemon (auto-restart)
+- `npm run setup` - Setup admin and manager accounts
+- `npm run test-login` - Test admin and manager login credentials
+- `npm run check-users` - View all users in database
+- `npm run fix-roles` - Fix admin and manager roles
 
 ### Frontend
 - `npm run dev` - Start development server
@@ -217,10 +221,41 @@ MERN-Admin-Dashboard/
 ## 🐛 Troubleshooting
 
 ### Manager Login Issue
-If the manager login shows admin access, run the fix script:
+If the manager login is not working, follow these steps:
+
+**Step 1: Setup Accounts (Recommended)**
 ```bash
 cd backend
-node scripts/fixRoles.js
+npm run setup
+```
+This will create/update both admin and manager accounts with correct credentials.
+
+**Step 2: Verify Login Credentials**
+```bash
+npm run test-login
+```
+
+**Step 3: Clear Browser Cache**
+- Clear your browser's local storage
+- Or use Incognito/Private mode
+- Press F12 → Application → Local Storage → Clear All
+
+**Step 4: Try Login Again**
+- Email: `manager@gmail.com`
+- Password: `managerpassword123`
+
+### Fix All Roles
+If you need to fix admin and manager roles:
+```bash
+cd backend
+npm run fix-roles
+```
+
+### Check All Users
+To see all users in the database:
+```bash
+cd backend
+npm run check-users
 ```
 
 ### Database Connection
